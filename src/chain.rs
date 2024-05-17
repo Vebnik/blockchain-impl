@@ -1,6 +1,6 @@
 use std::sync::Mutex;
 
-use crate::block::Block;
+use crate::{block::Block, transactions::Transactions};
 
 
 
@@ -11,7 +11,7 @@ pub struct Chain {
 
 impl Chain {
     pub fn new() -> Self {
-        let data = "GenesisBlock".into();
+        let data = Transactions::new("0x0".into(), "0x1".into(), 10u128);
         let previous_block_hash: Vec<u8> = Vec::with_capacity(0);
 
         let genesis_block = Block::new(data, previous_block_hash);
@@ -28,7 +28,7 @@ impl Chain {
         self.blocks.lock().unwrap().push(block);
     }
 
-    pub fn add_block_with_data(&self, data: String) -> bool {
+    pub fn add(&self, data: Transactions) -> bool {
         let previous_block_hash = self.get_previous_block_hash();
         let block = Block::new(data, previous_block_hash);
 

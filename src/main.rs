@@ -1,15 +1,18 @@
-use crate::chain::Chain;
+use crate::{chain::Chain, transactions::Transactions};
 
 pub mod block;
 pub mod chain;
+pub mod transactions;
 pub mod tests;
 
 fn main() {
     let blockchain = Chain::new();
 
-    for i in 0..1000000 {
-        let data = format!("block_{i}");
-        blockchain.add_block_with_data(data);
+    for i in 0..100000000 {
+        let data = Transactions::new(
+            "0x0".into(), format!("0x{i}"), 10u128
+        );
+        blockchain.add(data);
     }
 
     let genesis_block_data = blockchain.blocks.lock().unwrap().first().unwrap().data.clone();

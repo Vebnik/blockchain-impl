@@ -1,5 +1,6 @@
 use std::time::{SystemTime, UNIX_EPOCH};
 
+use crate::transactions::Transactions;
 
 #[derive(Debug, Clone)]
 pub struct Header(pub String);
@@ -17,14 +18,14 @@ pub struct Block {
 }
 
 impl Block {
-    pub fn new(data: String, previous_block_hash: Vec<u8>) -> Self {
+    pub fn new(data: Transactions, previous_block_hash: Vec<u8>) -> Self {
         let timestamp = SystemTime::now().duration_since(UNIX_EPOCH)
             .expect("Error on get SystemTime UNIX_EPOCH")
             .as_millis()
             .to_be_bytes()
             .to_vec();
 
-        let data = data.as_bytes().to_vec();
+        // let data = data.;
 
         let header = vec![
             timestamp.clone(),
